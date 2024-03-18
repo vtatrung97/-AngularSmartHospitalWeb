@@ -1,0 +1,95 @@
+<div>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'Locations' | localize" [description]="'LocationHeaderInfo' | localize">
+            <div role="actions">
+                <button (click)="createLocation()" class="btn btn-primary">
+                    <i class="fa fa-plus"></i> {{ 'CreateNewLocation' | localize }}
+                </button>
+            </div>
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <div class="form">
+                        <!-- <form (submit)="loadValueSets()" autocomplete="new-password">
+                            <div class="form-body">
+                                <div class="row mb-4">
+                                    <div class="col-xl-12 text-right">
+                                        <button name="RefreshButton"
+                                            class="btn btn-primary"><i class="fa fa-sync"></i>
+                                            {{'Refresh' | localize}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form> -->
+                    </div>
+                    <div class="row align-items-center">
+                        <!--<Primeng-TurboTable-Start>-->
+                        <div class="col primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+                            <dx-data-grid
+                                id="gridContainer"
+                                [dataSource]="primengTableHelper.records"
+                                [showBorders]="true"
+                                (onSaving)="onSaving($event)"
+                                (onRowInserting)="insertLocationRow($event)">
+                            >
+                                <dxo-editing
+                                    mode="popup"
+                                    [allowUpdating]="true"
+                                    [allowAdding]="true"
+                                    [allowDeleting]="true"
+                                >
+                                    <dxo-popup title="{{'LocationInfo' | localize}}" [showTitle]="true" [width]="700" [height]="525">
+                                    </dxo-popup>
+                                    <dxo-form [colCount]="2" [formData]="locationData">
+                                        <dxi-item itemType="group" caption="General Information" [colCount]="2" [colSpan]="2">
+                                            <dxi-item dataField="name"></dxi-item>
+                                            <dxi-item dataField="status"></dxi-item>
+                                            <dxi-item dataField="operationalStatus"></dxi-item>
+                                            <dxi-item dataField="mode"></dxi-item>
+                                            <dxi-item
+                                                dataField="description"
+                                                editorType="dxTextArea"
+                                                [colSpan]="2"
+                                                [editorOptions]="{ height: 100 }">
+                                            </dxi-item>
+                                        </dxi-item>
+                                        <dxi-item itemType="group" caption="Address" [colCount]="2" [colSpan]="2">
+                                            <dxi-item [colSpan]="1" dataField="address.use"></dxi-item>
+                                            <dxi-item [colSpan]="1" dataField="address.type"></dxi-item>
+                                            <dxi-item [colSpan]="1" dataField="address.text"></dxi-item>
+                                            <dxi-item [colSpan]="1" dataField="address.line[0]"></dxi-item>
+                                            <dxi-item [colSpan]="1" dataField="address.district"></dxi-item>
+                                            <dxi-item [colSpan]="1" dataField="address.state"></dxi-item>
+                                            <dxi-item [colSpan]="1" dataField="address.city"></dxi-item>
+                                            <dxi-item [colSpan]="1" dataField="address.country"></dxi-item>
+                                        </dxi-item>
+                                        <dxi-item itemType="group" caption="Position" [colCount]="3" [colSpan]="2">
+                                            <dxi-item [colSpan]="1" dataField="position.longitude"></dxi-item>
+                                            <dxi-item [colSpan]="1" dataField="position.latitude"></dxi-item>
+                                            <dxi-item [colSpan]="1" dataField="position.altitude"></dxi-item>
+                                        </dxi-item>
+                                    </dxo-form>
+                                </dxo-editing>
+                                <dxi-column dataField="id" [visible]="false"></dxi-column>
+                                <dxi-column dataField="operationalStatus" [visible]="false"></dxi-column>
+                                <dxi-column dataField="name"></dxi-column>
+                                <dxi-column dataField="status"></dxi-column>
+                                <dxi-column dataField="mode"></dxi-column>
+                                <dxi-column dataField="description"></dxi-column>
+                                <dxi-column dataField="position.longitude" [visible]="false"></dxi-column>
+                                <dxi-column dataField="position.latitude" [visible]="false"></dxi-column>
+                                <dxi-column dataField="position.altitude" [visible]="false"></dxi-column>
+                                <dxi-column dataField="address" [visible]="false"></dxi-column>
+                            </dx-data-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<createUpdateLocationModal
+#createUpdateLocationModal
+(modalSave)="loadLocations()"
+></createUpdateLocationModal>

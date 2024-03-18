@@ -1,0 +1,248 @@
+<div
+    appBsModal
+    #createOrEditModal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }"
+>
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <span>{{ 'CreateNewLocation' | localize }}</span>
+                </h5>
+                <button
+                    type="button"
+                    class="close"
+                    (click)="close()"
+                    [attr.aria-label]="l('Close')"
+                    [disabled]="saving"
+                >
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form action="your-action" (submit)="onFormSubmit($event)">
+                <div class="modal-body">
+                    <dx-form
+                        id="form"
+                        [formData]="location"
+                        [readOnly]="false"
+                        [showColonAfterLabel]="true"
+                        [showValidationSummary]="true"
+                        validationGroup="locationData"
+                        style="overflow: auto; height: 780px;"
+                        class="dxFormPopup"
+                    >
+                        <dxi-item itemType="group" caption="{{ 'LocationInfor' | localize }}" [colCount]="2">
+                            <dxi-item dataField="name">
+                                <dxo-label location="left" alignment="right" text="{{ 'Name' | localize }}"></dxo-label>
+                                <dxi-validation-rule type="required" message="{{ 'FieldIsRequired' | localize }}">
+                                </dxi-validation-rule>
+                            </dxi-item>
+                            <dxi-item
+                                dataField="status"
+                                editorType="dxSelectBox"
+                                [editorOptions]="{
+                                    items: locationStatusList,
+                                    valueExpr: 'code',
+                                    displayExpr: 'display',
+                                    searchEnabled: true,
+                                    placeholder: l('SelectStatus')
+                                }"
+                            >
+                                <dxo-label
+                                    location="left"
+                                    alignment="right"
+                                    text="{{ 'Status' | localize }}"
+                                ></dxo-label>
+                                <dxi-validation-rule type="required" message="{{ 'FieldIsRequired' | localize }}">
+                                </dxi-validation-rule>
+                            </dxi-item>
+                            <dxi-item dataField="operationalStatus">
+                                <dxo-label
+                                    location="left"
+                                    alignment="right"
+                                    text="{{ 'OperationalStatus' | localize }}"
+                                ></dxo-label>
+                            </dxi-item>
+                            <dxi-item
+                                dataField="mode"
+                                editorType="dxSelectBox"
+                                [editorOptions]="{
+                                    items: locationModeList,
+                                    valueExpr: 'code',
+                                    displayExpr: 'display',
+                                    searchEnabled: true
+                                }"
+                            >
+                                <dxo-label location="left" alignment="right" text="{{ 'Mode' | localize }}"></dxo-label>
+                            </dxi-item>
+                            <!-- <dxi-item dataField="type">
+                                <dxo-label location="left" alignment="right" text="{{ 'Type' | localize }}"></dxo-label>
+                            </dxi-item> -->
+                            <dxi-item>
+                                <dxo-label location="left" alignment="right" text="{{ 'Type' | localize }}"></dxo-label>
+                                <dx-drop-down-box
+                                    [(value)]="gridBoxValue"
+                                    valueExpr="code"
+                                    displayExpr="display"
+                                    placeholder="{{ 'SelectType' | localize }}"
+                                    [showClearButton]="true"
+                                    [dataSource]="locationTypes"
+                                    style="width: 100%"
+                                >
+                                    <div *dxTemplate="let data of 'content'">
+                                        <dx-data-grid
+                                            [dataSource]="locationTypes"
+                                            keyExpr="code"
+                                            [selection]="{ mode: 'multiple' }"
+                                            [hoverStateEnabled]="true"
+                                            [paging]="{ enabled: true, pageSize: 10 }"
+                                            [filterRow]="{ visible: true }"
+                                            [scrolling]="{ mode: 'standard' }"
+                                            [height]="265"
+                                            [(selectedRowKeys)]="gridBoxValue"
+                                        >
+                                            <dxi-column dataField="code" caption="{{ 'Code' | localize }}"></dxi-column>
+                                            <dxi-column
+                                                dataField="display"
+                                                caption="{{ 'Display' | localize }}"
+                                            ></dxi-column>
+                                        </dx-data-grid>
+                                    </div>
+                                </dx-drop-down-box>
+                            </dxi-item>
+                            <!-- <dxi-item dataField="physicalType">
+                                <dxo-label
+                                    location="left"
+                                    alignment="right"
+                                    text="{{ 'PhysicalType' | localize }}"
+                                ></dxo-label>
+                            </dxi-item> -->
+                            <dxi-item>
+                                <dxo-label
+                                    location="left"
+                                    alignment="right"
+                                    text="{{ 'PhysicalType' | localize }}"
+                                ></dxo-label>
+                                <dx-select-box
+                                    [(value)]="physicalTypeValue"
+                                    valueExpr= "code"
+                                    displayExpr="display"
+                                    [items]="locationPhysicalTypeList"
+                                >
+                                </dx-select-box>
+                            </dxi-item>
+                            <dxi-item
+                                dataField="description"
+                                editorType="dxTextArea"
+                                [editorOptions]="{ height: 90 }"
+                                [colSpan]="2"
+                            >
+                                <dxo-label
+                                    location="left"
+                                    alignment="right"
+                                    text="{{ 'Description' | localize }}"
+                                ></dxo-label>
+                            </dxi-item>
+                        </dxi-item>
+                        <dxi-item itemType="group" caption="{{ 'Contact' | localize }}">
+                            <dxi-item
+                                itemType="group"
+                                name="telecom"
+                                [colCount]="3"
+                                *ngFor="let tel of phoneOptions; let i = index"
+                            >
+                                <dxi-item [dataField]="'telecom[' + i + '].system'"
+                                editorType="dxSelectBox"
+                                [editorOptions]="{
+                                    items: telecomSystems,
+                                    valueExpr: 'code',
+                                    displayExpr: 'display',
+                                    searchEnabled: true,
+                                    placeholder: l('SelectStatus')
+                                }">
+                                    <dxo-label text="{{ 'System' | localize }}"> </dxo-label>
+                                </dxi-item>
+                                <dxi-item [dataField]="'telecom[' + i + '].use'">
+                                    <dxo-label text="{{ 'Use' | localize }}"> </dxo-label>
+                                </dxi-item>
+                                <dxi-item [dataField]="'telecom[' + i + '].value'" [editorOptions]="phoneOptions[i]">
+                                    <dxo-label text="{{ 'Value' | localize }}"> </dxo-label>
+                                </dxi-item>
+                            </dxi-item>
+                            <dxi-item
+                                itemType="button"
+                                horizontalAlignment="left"
+                                cssClass="add-phone-button"
+                                [buttonOptions]="addPhoneButtonOptions"
+                            >
+                            </dxi-item>
+                        </dxi-item>
+                        <dxi-item itemType="group" caption="{{ 'Address' | localize }}">
+                            <dxi-item
+                                itemType="group"
+                                name="address"
+                                [colCount]="3"
+                                *ngFor="let address of addressOptions; let i = index"
+                            >
+                                <dxi-item [dataField]="'address[' + i + '].use'">
+                                    <dxo-label text="{{ 'Use' | localize }}"> </dxo-label>
+                                </dxi-item>
+                                <dxi-item [dataField]="'address[' + i + '].type'">
+                                    <dxo-label text="{{ 'Type' | localize }}"> </dxo-label>
+                                </dxi-item>
+                                <dxi-item [dataField]="'address[' + i + '].text'">
+                                    <dxo-label text="{{ 'Text' | localize }}"> </dxo-label>
+                                </dxi-item>
+                            </dxi-item>
+                            <dxi-item
+                                itemType="button"
+                                horizontalAlignment="left"
+                                cssClass="add-phone-button"
+                                [buttonOptions]="addAddressButtonOptions"
+                            >
+                            </dxi-item>
+                        </dxi-item>
+                        <dxi-item itemType="group" caption="{{ 'Position' | localize }}" [colCount]="3">
+                            <dxi-item dataField="position.longitude">
+                                <dxo-label
+                                    location="left"
+                                    alignment="right"
+                                    text="{{ 'Longitude' | localize }}"
+                                ></dxo-label>
+                            </dxi-item>
+                            <dxi-item dataField="position.latitude">
+                                <dxo-label
+                                    location="left"
+                                    alignment="right"
+                                    text="{{ 'Latitude' | localize }}"
+                                ></dxo-label>
+                            </dxi-item>
+                            <dxi-item dataField="position.altitude">
+                                <dxo-label
+                                    location="left"
+                                    alignment="right"
+                                    text="{{ 'Altitude' | localize }}"
+                                ></dxo-label>
+                            </dxi-item>
+                        </dxi-item>
+                        <dxi-item itemType="group">
+                            <dxi-item
+                                itemType="button"
+                                class="btn btn-primary"
+                                horizontalAlignment="right"
+                                [buttonOptions]="buttonOptions"
+                            >
+                            </dxi-item>
+                        </dxi-item>
+                    </dx-form>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

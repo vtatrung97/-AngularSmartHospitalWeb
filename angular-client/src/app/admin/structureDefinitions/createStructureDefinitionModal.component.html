@@ -1,0 +1,269 @@
+<div
+    appBsModal
+    #createOrEditModal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }"
+>
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form #structureDefinitionForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="new-password">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span>{{ 'CreateNewStructureDefinition' | localize }}</span>
+                    </h5>
+                    <button
+                        type="button"
+                        class="close"
+                        (click)="close()"
+                        [attr.aria-label]="l('Close')"
+                        [disabled]="saving"
+                    >
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>{{ 'Publisher' | localize }} *</label>
+                                <input
+                                    id="StructureDefinitionPublisherInput"
+                                    #structureDefinitionPublisherInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Publisher"
+                                    [(ngModel)]="structureDefinition.publisher"
+                                    required
+                                    readonly="readonly"
+                                />
+                                <validation-messages
+                                    [formCtrl]="structureDefinitionPublisherInput"
+                                ></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'Date' | localize }} *</label>
+                                <input
+                                    id="StructureDefinitionDateInput"
+                                    #structureDefinitionDateInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Date"
+                                    [(ngModel)]="structureDefinition.date"
+                                    required
+                                    readonly="readonly"
+                                />
+                                <validation-messages [formCtrl]="structureDefinitionDateInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'Version' | localize }} *</label>
+                                <input
+                                    id="StructureDefinitionVersionInput"
+                                    #structureDefinitionVersionInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Version"
+                                    [(ngModel)]="structureDefinition.version"
+                                    required
+                                    readonly="readonly"
+                                />
+                                <validation-messages [formCtrl]="structureDefinitionVersionInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'Url' | localize }} *</label>
+                                <input
+                                    id="StructureDefinitionUrlInput"
+                                    #structureDefinitionUrlInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Url"
+                                    [(ngModel)]="structureDefinition.url"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="structureDefinitionUrlInput"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>{{ 'Type' | localize }} *</label>
+                                <input
+                                    id="StructureDefinitionTypeInput"
+                                    #structureDefinitionTypeInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Type"
+                                    [(ngModel)]="structureDefinition.type"
+                                    (keyup)="onTypeChange($event)"
+                                    autocomplete="off"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="structureDefinitionTypeInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'Title' | localize }} *</label>
+                                <input
+                                    id="StructureDefinitionTitleInput"
+                                    #structureDefinitionTitleInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Title"
+                                    [(ngModel)]="structureDefinition.title"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="structureDefinitionTitleInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'PublishStatus' | localize }} *</label>
+                                <select
+                                    id="StructureDefinitionPublishStatusInput"
+                                    #structureDefinitionPublishStatusInput="ngModel"
+                                    name="Status"
+                                    class="form-control"
+                                    [(ngModel)]="structureDefinition.status"
+                                    required
+                                >
+                                    <option *ngFor="let status of publishStatusList" [value]="status">
+                                        {{ status | localize }}
+                                    </option>
+                                </select>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group" *ngIf="structureDefinition.snapshot">
+                                <!-- <h5 class="card-title">{{item.system}}</h5>
+                                <span>Version:</span>&nbsp;<span>{{item.version}}</span>  -->
+                                <p-toolbar styleClass="mb-4">
+                                    <ng-template pTemplate="left">
+                                        <a href="javascript:void(0)" (click)="onAddElement()" class="btn btn-primary">
+                                            {{ 'AddElement' | localize }}
+                                        </a>
+                                    </ng-template>
+
+                                    <!-- <ng-template pTemplate="right">
+                                        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                                        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+                                    </ng-template> -->
+                                </p-toolbar>
+                                <p-table
+                                    [value]="structureDefinition.snapshot.element"
+                                    dataKey="id"
+                                    class="table"
+                                    [scrollable]="true"
+                                    scrollHeight="300px"
+                                >
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>{{ 'Id' | localize }}</th>
+                                            <th>{{ 'Path' | localize }}</th>
+                                            <th>{{ 'Type' | localize }}</th>
+                                            <th>{{ 'Min' | localize }}</th>
+                                            <th>{{ 'Max' | localize }}</th>
+                                            <th>{{ 'Definition' | localize }}</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body"  let-elemt let-i="rowIndex"
+                                    let-expanded="expanded">
+                                        <tr>
+                                            <td pEditableColumn>
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" [disabled]="i<=1"
+                                                        name="structureDefinition.snapshot.element[i].id" 
+                                                        (keyup)="onElementIdChange($event,i)"
+                                                        [(ngModel)]="structureDefinition.snapshot.element[i].id">
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{elemt.id}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td>
+                                                {{elemt.path}}
+                                            </td>
+                                            <td pEditableColumn>
+                                                <p-cellEditor  *ngIf="structureDefinition.snapshot.element[i].type">
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" [disabled]="i<=1"
+                                                        name="structureDefinition.snapshot.element[i].type[0].code" 
+                                                        [(ngModel)]="structureDefinition.snapshot.element[i].type[0].code">
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{elemt.type[0].code}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td pEditableColumn>
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" 
+                                                        name="structureDefinition.snapshot.element[i].min" 
+                                                        (keyup)="onElementMinChange($event,i)"
+                                                        [(ngModel)]="structureDefinition.snapshot.element[i].min">
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{elemt.min}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td pEditableColumn>
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" 
+                                                        (keyup)="onElementMaxChange($event,i)"
+                                                        name="structureDefinition.snapshot.element[i].max" 
+                                                        [(ngModel)]="structureDefinition.snapshot.element[i].max">
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{elemt.max}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td pEditableColumn>
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" 
+                                                        name="structureDefinition.snapshot.element[i].definition" 
+                                                        [(ngModel)]="structureDefinition.snapshot.element[i].definition">
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{elemt.definition}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        [disabled]="saving"
+                        type="button"
+                        class="btn btn-light-primary font-weight-bold"
+                        (click)="close()"
+                    >
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary font-weight-bold"
+                        [disabled]="!structureDefinitionForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ 'Save' | localize }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

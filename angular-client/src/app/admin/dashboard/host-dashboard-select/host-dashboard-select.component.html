@@ -1,0 +1,105 @@
+<div class="row">
+    <div class="col-md-3" *ngFor="let router of routes">
+        <div class="card">
+            <a class="card-select" routerLink="../{{router.link}}">
+                <span class="card-select_icon">
+                    <i class="{{router.icon}}"></i>
+                </span>
+                {{router.name}}
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <a class="card-select" routerLink="/dashboard/find-patient-record/">
+                <span class="card-select_icon">
+                    <i class="fa fa-search"></i>
+                </span>
+                Find Patient Record
+            </a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <a class="card-select" routerLink="/dashboard/active-visits/">
+                <span class="card-select_icon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                Active Visits
+            </a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <a class="card-select" routerLink="/dashboard/register-a-patient/">
+                <span class="card-select_icon">
+                    <i class="fa fa-user"></i>
+                </span>
+                Register a patient
+            </a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <a class="card-select" routerLink="/dashboard/capture-vitals/">
+                <span class="card-select_icon">
+                    <i class="fa fa-heart-pulse"></i>
+                </span>
+                Capture Vitals
+            </a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <a class="card-select" routerLink="/dashboard/appointment-scheduling/">
+                <span class="card-select_icon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                Appointment Scheduling
+            </a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <a class="card-select" routerLink="/dashboard/reports/">
+                <span class="card-select_icon">
+                    <i class="fa fa-list-alt"></i>
+                </span>
+                Reports
+            </a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <a class="card-select" routerLink="/dashboard/data-management/">
+                <span class="card-select_icon">
+                    <i class="fa fa-hdd"></i>
+                </span>
+                Data Management
+            </a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <a class="card-select" routerLink="/dashboard/configure-metadata/">
+                <span class="card-select_icon">
+                    <i class="fa fa-tasks"></i>
+                </span>
+                Configure Metadata
+            </a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <a class="card-select" routerLink="/dashboard/system-adminnistration/">
+                <span class="card-select_icon">
+                    <i class="fa fa-cogs"></i>
+                </span>
+                System Administration
+            </a>
+        </div>
+    </div>
+</div> -->

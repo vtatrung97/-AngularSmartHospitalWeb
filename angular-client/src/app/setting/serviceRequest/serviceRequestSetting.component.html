@@ -1,0 +1,112 @@
+<div>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header
+            [title]="'ServiceRequestSettings' | localize"
+            [description]="'ServiceRequestSettingHeaderInfo' | localize"
+        >
+            <!-- <div role="actions">
+                <button (click)="createValueSet()" class="btn btn-primary">
+                    <i class="fa fa-plus"></i> {{ 'CreateNewValueSet' | localize }}
+                </button>
+            </div> -->
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <div class="left" *ngIf="structureDefinition.snapshot">
+                        <dx-list
+                            class="list"
+                            [dataSource]="structureDefinition.snapshot.element"
+                            selectionMode="single"
+                            (onSelectionChanged)="listSelectionChanged($event)"
+                        >
+                            <div *dxTemplate="let item of 'item'">
+                                <div>
+                                    <div class="hotel">
+                                        <div class="name">{{ item.id }}</div>
+                                        <div class="address">{{ item.path }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </dx-list>
+                    </div>
+                    <div class="right">
+                        <div *ngIf="currentElement">
+                            <div class="header">
+                                <div class="name-container">
+                                    <div class="name">{{ currentElement.id }}</div>
+                                </div>
+                                <!-- <div class="price-container" *ngIf="currentElement.type">
+                                    <div class="price">{{ currentElement.type[0].code }}</div>
+                                </div> -->
+                            </div>
+                            <div class="form">
+                                <div class="dx-fieldset flex-column">
+                                    <div class="row">
+                                        <div class="dx-fieldset-header">{{ 'ElementInformation' | localize }}</div>
+
+                                        <div class="dx-field flex-row">
+                                            <div class="dx-field-label">{{ 'Label' | localize }}:</div>
+                                            <dx-text-box class="dx-field-value" [(ngModel)]="currentElement.label">
+                                            </dx-text-box>
+                                        </div>
+                                        <div class="dx-field flex-row">
+                                            <div class="dx-field-label">{{ 'Type' | localize }}</div>
+                                            <!-- <dx-text-box class="dx-field-value" [(ngModel)]="currentElement.id">
+                                                </dx-text-box> -->
+                                            <dx-select-box
+                                                class="dx-field-value"
+                                                [(ngModel)]="currentElement.type[0].code"
+                                                [items]="dataTypeList"
+                                            ></dx-select-box>
+                                        </div>
+                                        <div class="dx-field flex-row">
+                                            <div class="dx-field-label">{{ 'Short' | localize }}</div>
+                                            <dx-text-box class="dx-field-value" [(ngModel)]="currentElement.short">
+                                            </dx-text-box>
+                                        </div>
+                                        <div class="dx-field flex-row">
+                                            <div class="dx-field-label">{{ 'Min' | localize }}</div>
+                                            <dx-number-box class="dx-field-value" 
+                                            [showSpinButtons]="true"
+                                            [min]="0" [(ngModel)]="currentElement.min">
+                                            </dx-number-box>
+                                        </div>
+                                        <div class="dx-field flex-row">
+                                            <div class="dx-field-label">{{ 'Max' | localize }}</div>
+                                            <dx-text-box class="dx-field-value" [(ngModel)]="currentElement.max">
+                                            </dx-text-box>
+                                        </div>
+                                        <div class="dx-field flex-row">
+                                            <div class="dx-field-label">{{ 'Definition' | localize }}</div>
+                                            <dx-text-area
+                                                class="dx-field-value"
+                                                [(ngModel)]="currentElement.definition"
+                                            >
+                                            </dx-text-area>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dx-fieldset" >
+                                    <div class="dx-fieldset-header">{{ 'ValueSet' | localize }}</div>
+                                    <valueSetSetting #valueSetSetting  (valueSetSave)="updateValueSet()" [valueSet]="valueSet"  [element]="currentElement"></valueSetSetting>
+                                </div>
+                                <div class="dx-fieldset">
+                                    <div class="dx-field">
+                                        <dx-button
+                                            stylingMode="contained"
+                                            text="{{ 'SaveChanged' | localize }}"
+                                            type="normal"
+                                            (onClick)="save($event)"
+                                        >
+                                        </dx-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

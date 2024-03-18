@@ -1,0 +1,15 @@
+<dx-data-grid *ngIf="concepts"
+                                id="gridContainer"
+                                caption="Binding"
+                                [dataSource]="concepts"
+                                [columns]="['code','display']"
+                                [showBorders]="true"
+                                >
+                                <!-- <dxo-editing
+    mode="row"
+    [allowUpdating]="true"
+    [allowDeleting]="true"
+    [allowAdding]="true"
+  >
+  </dxo-editing> -->
+</dx-data-grid>

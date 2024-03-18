@@ -1,0 +1,131 @@
+<div
+    appBsModal
+    #createOrEditModal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }"
+>
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ 'AddInclude' | localize }}</span>
+                </h4>
+                <button
+                    type="button"
+                    class="close"
+                    (click)="close()"
+                    [attr.aria-label]="l('Close')"
+                    [disabled]="saving"
+                >
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <form (submit)="getCodeSystems('')" autocomplete="new-password">
+                            <div class="form-group">
+                                <label>{{ 'System' | localize }} *</label>
+                                <div class="input-group">
+                                    <input
+                                        id="FilterSearchKeyInput"
+                                        (keyup)="onKeySearch($event)"
+                                        [(ngModel)]="filters.searchKey"
+                                        name="Name"
+                                        class="form-control"
+                                        placeholder="{{ 'SearchWithThreeDot' | localize }}"
+                                        type="text"
+                                    />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="flaticon-search-1" [attr.aria-label]="l('Search')"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" *ngIf="codeSystems">
+                                <p-listbox [options]="codeSystems" optionValue="resource"  name="System" [(ngModel)]="selectedCodeSystem"  (click)="getCodeSystemOption($event)" optionLabel="resource.name"></p-listbox>
+                                <!-- <div class="list-group w-auto" style="margin: 0.2rem">
+                                    <a
+                                        href="javascript:void(0)"
+                                        *ngFor="let item of codeSystems"
+                                        (click)="getCodeSystem(item.resource)"
+                                    >
+                                        <label class="list-group-item d-flex gap-3">
+                                            <span class="pt-1 form-checked-content">
+                                                <strong>{{ item.resource.name }}</strong>
+                                                <small class="d-block">
+                                                    {{ item.resource.title }}
+                                                </small>
+                                                <p>{{ item.resource.publisher }}</p>
+                                             
+                                            </span>
+                                        </label>
+                                    </a>
+                                </div> -->
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-6">
+                        <div class="card" *ngIf="selectedCodeSystem">
+                            <div class="card-body">
+                                <h5 class="card-title">{{selectedCodeSystem.name}}</h5>
+                                <p class="card-text">
+                                   {{selectedCodeSystem.title}}
+                                </p>
+                                <p class="card-text">
+                                    {{selectedCodeSystem.publisher}}
+                                 </p>
+                                 
+                            <p-table [value]="selectedCodeSystem.concept" [(selection)]="selectedConcepts" class="table">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 3rem">
+                                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                        </th>
+                                        <th>{{'Code'|localize}}</th>
+                                        <th>{{'Display'|localize}}</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-item>
+                                    <tr>
+                                        <td>
+                                            <p-tableCheckbox [value]="item"></p-tableCheckbox>
+                                        </td>
+                                        <td>{{item.code}}</td>
+                                        <td>{{item.display}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    [disabled]="saving"
+                    type="button"
+                    class="btn btn-light-primary font-weight-bold"
+                    (click)="close()"
+                >
+                    {{ 'Cancel' | localize }}
+                </button>
+                <button
+                    type="button"
+                    [buttonBusy]="saving"
+                    [busyText]="l('SavingWithThreeDot')"
+                    (click)="save()"
+                    class="btn btn-primary font-weight-bold"
+                >
+                    <i class="fa fa-save"></i> <span>{{ 'Save' | localize }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

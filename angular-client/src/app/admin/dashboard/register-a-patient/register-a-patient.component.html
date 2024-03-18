@@ -1,0 +1,144 @@
+<div class="row">
+    <div class="col-md-4 flex-column h-100 background-secondary">
+        <div class="form-column scroll-hidden col-md-12">
+            <h5 class="text-uppercase mb-5">{{ 'PatientInfo' | localize }}</h5>
+            <div class="divider_pri mart-0"></div>
+
+            <div class="flex-column flex-grow-1 scroll-secondary form-group_on" style="padding-right: 6px;">
+
+                <div class="form-group">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon">
+                            <i class="pi pi-user"></i>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" 
+                            id="inputgroup" 
+                            pInputText 
+                            />
+                            <label for="inputgroup">Name</label>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon ">
+                            <i class="pi pi-info"></i>
+                        </span>
+                        <span class="p-float-label">
+                            <p-dropdown
+                                inputId="dropdown"
+                                [autoDisplayFirst]="false"
+                                optionLabel="name"
+                            ></p-dropdown>
+                            <label for="dropdown">Gender</label>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon">
+                            <i class="pi pi-info"></i>
+                        </span>
+                        <span class="p-float-label">
+                            <p-inputMask 
+                            inputId="inputmask2"
+                            mask="99/99/9999">
+                            </p-inputMask>
+                            <label for="inputmask2">Date Of Birth</label>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon">
+                            <i class="pi pi-info"></i>
+                        </span>
+                        <span class="p-float-label">
+                            <p-inputNumber 
+                                inputId="inputnumber" 
+                                mode="decimal" 
+                                [min]="0" [max]="150">
+                            </p-inputNumber>
+                            <label for="inputnumber">Age</label>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon">
+                            <i class="pi pi-phone"></i>
+                        </span>
+                        <span class="p-float-label">
+                            <p-inputMask
+                                inputId="inputmask"
+                                mask="(+99) 999 999 999"
+                            ></p-inputMask>
+                            <label for="inputmask">Phone</label>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon">
+                            <i class="pi pi-google"></i>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" 
+                            id="inputgroup" 
+                            pInputText 
+                            />
+                            <label for="inputgroup">Email</label>
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 flex-column h-100 scroll-auto">
+        <div class="form-column col-md-12">
+            <h5 class="text-uppercase mb-5">Thông tin thêm</h5>
+            <div class="form-horizontal form-rise form-group_on">
+
+                <div class="form-group">
+                    <span class="p-float-label">
+                        <p-dropdown
+                            inputId="dropdown"
+                            [autoDisplayFirst]="false"
+                        ></p-dropdown>
+                        <label for="dropdown">Blood Group</label>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <span class="p-float-label">
+                        <p-dropdown
+                            inputId="dropdown"
+                            [autoDisplayFirst]="false"
+                            optionLabel="name"
+                        ></p-dropdown>
+                        <label for="dropdown">Marital Status</label>
+                    </span>
+                </div>
+                
+                <div class="form-group">
+                    <span class="p-float-label">
+                        <input type="text" 
+                        id="inputtext" 
+                        pInputText />
+                        <label for="inputtext">Any Known Allergies</label>
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

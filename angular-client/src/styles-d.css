@@ -1,0 +1,62 @@
+
+body {
+    font-family: 'Saira', sans-serif;
+}    
+
+patient-list {
+    flex: 1;
+}
+
+app-valueset {
+    flex: 1;
+}
+
+app-widget-edition-statistics .card.card-custom > .card-body {
+    padding: 0 !important;
+}
+
+/*===========================   ROUTER   ====================================================*/
+
+.default-router {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+}
+
+.default-router > ng-component {
+    flex: 1;
+}
+
+.default-router::-webkit-scrollbar {
+    width: 14px;
+}
+
+.default-router::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+}
+
+.default-router::-webkit-scrollbar-thumb {
+    /* background-color: rgb(203 205 214); */
+    background-color: #adafb8;
+    /* background: #ddd;   */
+}
+
+.default-router::-webkit-scrollbar-track {
+    background: rgb(212 214 223);
+    /* background: #f2f2f2; */
+}
+
+.default-router::-webkit-scrollbar-thumb {
+    border: 3px solid rgb(212 214 223);
+}
+
+.default-router::-webkit-scrollbar-thumb:horizontal:hover,
+.default-router::-webkit-scrollbar-thumb:vertical:hover { 
+    background: #999ba4; 
+}
+.default-router::-webkit-scrollbar-thumb:horizontal:active,
+.default-router::-webkit-scrollbar-thumb:vertical:active { 
+    background: #777982; 
+}

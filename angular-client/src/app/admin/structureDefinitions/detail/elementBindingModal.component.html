@@ -1,0 +1,117 @@
+<div
+    appBsModal
+    #createOrEditModal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #elementBindingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="new-password">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span>{{ 'ElementBinding' | localize }}</span>
+                    </h5>
+                    <button
+                        type="button"
+                        class="close"
+                        (click)="close()"
+                        [attr.aria-label]="l('Close')"
+                        [disabled]="saving"
+                    >
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>{{ 'Path' | localize }} *</label>
+                                <input
+                                    id="ElementPathInput"
+                                    #elementPathInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Path"
+                                    [(ngModel)]="element.path"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="elementPathInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'Short' | localize }}</label>
+                                <input
+                                    id="ElementShortInput"
+                                    #elementShortInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Short"
+                                    [(ngModel)]="element.short"
+                                />
+                                <validation-messages [formCtrl]="elementShortInput"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>{{ 'Binding' | localize }}</label>
+                                <p-dropdown
+                                    [options]="valueSets"
+                                    #elementBindingInput="ngModel"
+                                    name="Binding"
+                                    [(ngModel)]="selectedValueSet"
+                                    (onChange)="onvalueSetChanged($event)"
+                                    optionLabel="resource.title"
+                                    optionValue="resource"
+                                    [filter]="true"
+                                ></p-dropdown>
+                            </div>
+                            <div class="form-group" *ngIf="selectedValueSet.compose">
+                                <h3 class="heading">{{ 'Include' | localize }}</h3>
+                                <div *ngFor="let include of selectedValueSet.compose.include; let i=index">
+                                    <label>{{include.system}}</label>
+                                    <table class="table table-striped table-hover table-bordered">
+                                        <thead>
+                                            <th>{{ 'Code' | localize }}</th>
+                                            <th>{{ 'Display' | localize }}</th>
+                                            <th></th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let concept of include.concept; let conceptIndex=index">
+                                                <td>{{concept.code}}</td>
+                                                <td>{{concept.display}}</td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        [disabled]="saving"
+                        type="button"
+                        class="btn btn-light-primary font-weight-bold"
+                        (click)="close()"
+                    >
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary font-weight-bold"
+                        [disabled]="!elementBindingForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ 'Save' | localize }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

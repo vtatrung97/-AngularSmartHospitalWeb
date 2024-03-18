@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props"></Import>
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>Delta.SmartHospital.Application</AssemblyName>
+    <PackageId>Delta.SmartHospital.Application</PackageId>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>Delta.SmartHospital</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Abp.EntityFrameworkCore.EFPlus" Version="6.4.0" />
+    <PackageReference Include="Hl7.Fhir.R4" Version="3.8.0" />
+    <PackageReference Include="Hl7.Fhir.Serialization" Version="3.8.2" />
+    <PackageReference Include="NPOI" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Delta.SmartHospital.Application.Shared\Delta.SmartHospital.Application.Shared.csproj" />
+    <ProjectReference Include="..\Delta.SmartHospital.Core\Delta.SmartHospital.Core.csproj" />
+    <ProjectReference Include="..\Delta.SmartHospital.EntityFrameworkCore\Delta.SmartHospital.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,139 @@
+<div [@routerTransition] class="sadasd">
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'ValueSets' | localize" [description]="'ValueSetHeaderInfo' | localize">
+            <div role="actions">
+                <button (click)="createValueSet()" class="btn btn-primary">
+                    <i class="fa fa-plus"></i> {{ 'CreateNewValueSet' | localize }}
+                </button>
+            </div>
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <div class="form">
+                        <form (submit)="loadValueSets()" autocomplete="new-password">
+                            <div class="form-body">
+                                <div class="row mb-4">
+                                    <div class="col-xl-12 text-right">
+                                        <button name="RefreshButton"
+                                            class="btn btn-primary"><i class="fa fa-sync"></i>
+                                            {{'Refresh' | localize}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row align-items-center">
+
+
+                        <!--<Primeng-TurboTable-Start>-->
+                        <div class="col primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+                        <div class="col primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+                            
+                            <p-table
+                                #dataTable
+                                (onLazyLoad)="loadValueSets()"
+                                [value]="primengTableHelper.records"
+                                rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                                [paginator]="false"
+                                selectionMode="single"
+                                [lazy]="true"
+                                [responsive]="primengTableHelper.isResponsive"
+                            >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 130px">{{ 'Actions' | localize }}</th>
+                                        <th pSortableColumn="title">
+                                            {{ 'Title' | localize }}
+                                            <p-sortIcon field="title"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="name">
+                                            {{ 'Name' | localize }}
+                                            <p-sortIcon field="name"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="status">
+                                            {{ 'Status' | localize }}
+                                            <p-sortIcon field="status"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="date">
+                                            {{ 'CreationTime' | localize }}
+                                            <p-sortIcon field="creationTime"></p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-record="$implicit">
+                                    <tr [pSelectableRow]="record">
+                                        <td style="width: 130px">
+                                            <div class="btn-group" dropdown placement="bottom left">
+                                                <button
+                                                    id="dropdownButton"
+                                                    type="button"
+                                                    class="btn btn-primary btn-sm dropdown-toggle"
+                                                    dropdownToggle
+                                                    aria-controls="dropdownMenu"
+                                                >
+                                                    <i class="fa fa-cog"></i><span class="caret"></span>
+                                                    {{ 'Actions' | localize }}
+                                                </button>
+                                                <ul
+                                                    id="dropdownMenu"
+                                                    class="dropdown-menu"
+                                                    role="menu"
+                                                    *dropdownMenu
+                                                    aria-labelledby="dropdownButton"
+                                                >
+                                                <li role="menuitem">
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item"
+                                                        (click)="editValueSet(record)"
+                                                        >{{ 'Edit' | localize }}</a
+                                                    >
+                                                </li>
+                                                    <li role="menuitem">
+                                                        <a
+                                                            href="javascript:;"
+                                                            class="dropdown-item"
+                                                            (click)="deleteValueSet(record)"
+                                                            >{{ 'Delete' | localize }}</a
+                                                        >
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a
+                                                [routerLink]="['detail', record.id]"
+                                                [queryParams]="{ id: record.id }"
+                                                queryParamsHandling="merge"
+                                            >
+                                                {{ record.title }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <span class="p-column-title">{{ 'Name' | localize }}</span>
+                                            {{ record.name }}
+                                        </td>
+                                        <td>
+                                            <span class="p-column-title">{{ 'Status' | localize }}</span>
+                                            {{ record.status | localize }}
+                                        </td>
+                                        <td>
+                                            <span class="p-column-title">{{ 'Date' | localize }}</span>
+                                            {{ record.creationTime }}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <createOrUpdateValueSetModal
+            #createOrUpdateValueSetModal
+            (modalSave)="loadValueSets()"
+        ></createOrUpdateValueSetModal>
+    </div>
+</div>

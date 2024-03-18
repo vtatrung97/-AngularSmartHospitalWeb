@@ -1,0 +1,295 @@
+<div
+    appBsModal
+    #createOrEditModal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }"
+>
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form #patientForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="new-password">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span>{{ 'CreateNewPatient' | localize }}</span>
+                    </h5>
+                    <button
+                        type="button"
+                        class="close"
+                        (click)="close()"
+                        [attr.aria-label]="l('Close')"
+                        [disabled]="saving"
+                    >
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body modal-body-lt">
+
+                    <div class="row">
+                        <div class="col-md-4 flex-column h-100 background-secondary">
+                            <div class="form-column scroll-hidden col-md-12">
+                                <h5 class="text-uppercase mb-5">{{ 'PatientInfo' | localize }}</h5>
+                                <div class="divider_pri mart-0"></div>
+            
+                                <div class="flex-column flex-grow-1 scroll-secondary form-group_on" style="padding-right: 6px;">
+                                    <div class="col-md-12 card-img position-relative card-img-patient">
+                                        <input type="file" class="file-input" id="img" name="img" accept="image/*">
+                                        <img class="img-patient" src="./assets/common/images/avatar.png">
+                                    </div> 
+
+                                    <div class="form-group">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">
+                                              <i class="pi pi-user"></i>
+                                            </span>
+                                            <span class="p-float-label">
+                                                <input type="text" 
+                                                id="patientGivenInput" 
+                                                #patientGivenInput="ngModel"
+                                                class=""
+                                                pInputText 
+                                                name="Given"
+                                                [(ngModel)]="patient.name[0].given[0]"
+                                                required/>
+                                                <label for="inputtext">Name</label>
+                                            </span>
+                                        </div>
+                                        <validation-messages [formCtrl]="patientGivenInput"></validation-messages>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon ">
+                                              <i class="pi pi-info"></i>
+                                            </span>
+                                            <span class="p-float-label">
+                                                <p-dropdown
+                                                  inputId="dropdown"
+                                                  [autoDisplayFirst]="false"
+                                                  optionLabel="name"
+                                                ></p-dropdown>
+                                                <label for="dropdown">Gender</label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">
+                                              <i class="pi pi-info"></i>
+                                            </span>
+                                            <span class="p-float-label">
+                                                <p-inputMask 
+                                                inputId="inputmask2"
+                                                mask="99/99/9999">
+                                                </p-inputMask>
+                                                <label for="inputmask2">Date Of Birth</label>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">
+                                              <i class="pi pi-info"></i>
+                                            </span>
+                                            <span class="p-float-label">
+                                                <p-inputNumber 
+                                                    inputId="inputnumber" 
+                                                    mode="decimal" 
+                                                    [min]="0" [max]="150">
+                                                </p-inputNumber>
+                                                <label for="inputnumber">Age</label>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">
+                                              <i class="pi pi-phone"></i>
+                                            </span>
+                                            <span class="p-float-label">
+                                                <p-inputMask
+                                                    inputId="inputmask"
+                                                    mask="(+99) 999 999 999"
+                                                ></p-inputMask>
+                                                <label for="inputmask">Phone</label>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">
+                                              <i class="pi pi-google"></i>
+                                            </span>
+                                            <span class="p-float-label">
+                                              <input type="text" 
+                                              id="inputgroup" 
+                                              pInputText 
+                                              />
+                                              <label for="inputgroup">Email</label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="col-md-8 flex-column h-100 scroll-auto">
+                            <div class="form-column col-md-12">
+                                <h5 class="text-uppercase mb-5">Thông tin thêm</h5>
+                                <div class="form-horizontal form-rise form-group_on">
+                                    
+                                    <!-- 
+                                    <h5>{{ 'AddressInformation' | localize }}</h5>
+                                    <h5>{{ 'TelecomInformation' | localize }}</h5> 
+                                    -->
+
+                                    <div class="form-group">
+                                        <span class="p-float-label">
+                                            <p-dropdown
+                                              inputId="dropdown"
+                                              [autoDisplayFirst]="false"
+                                            ></p-dropdown>
+                                            <label for="dropdown">Blood Group</label>
+                                        </span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <span class="p-float-label">
+                                            <p-dropdown
+                                              inputId="dropdown"
+                                              [autoDisplayFirst]="false"
+                                              optionLabel="name"
+                                            ></p-dropdown>
+                                            <label for="dropdown">Marital Status</label>
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <span class="p-float-label">
+                                            <input type="text" 
+                                            id="inputtext" 
+                                            pInputText />
+                                            <label for="inputtext">Any Known Allergies</label>
+                                        </span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="Active" type="checkbox"  [(ngModel)]="patient.active"  id="Active">
+                                            <label class="form-check-label" for="gridCheck">
+                                                {{ 'Active' | localize }}
+                                            </label>
+                                          </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        
+                                        <dx-data-grid
+                                            id="gridContainer"
+                                            [dataSource]="dataSource"
+                                            keyExpr="ID"
+                                            [showBorders]="true"
+                                            >
+                                            <dxi-column
+                                                dataField="Task_ID"
+                                                [width]="90">
+                                            </dxi-column>
+                                            <dxi-column
+                                                dataField="Task_Subject"
+                                                [width]="190"
+                                                caption="Subject">
+                                            </dxi-column>
+                                            <dxi-column
+                                                dataField="Task_Status"
+                                                caption="Status">
+                                            </dxi-column>
+                                            
+                                        </dx-data-grid>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{ 'FamilyName' | localize }} *</label>
+                                <input
+                                    id="patientFamilyInput"
+                                    #patientFamilyInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Family"
+                                    [(ngModel)]="patient.name[0].family"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="patientFamilyInput"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{ 'GivenName' | localize }} *</label>
+                                <input
+                                    id="patientGivenInput"
+                                    #patientGivenInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Given"
+                                    [(ngModel)]="patient.name[0].given[0]"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="patientGivenInput"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{ 'Gender' | localize }}</label
+                                ><br />
+                                <select name="Gender" [(ngModel)]="patient.gender" *ngIf="genders" class="form-control">
+                                    <option *ngFor="let gender of genders" [value]="gender.code">
+                                        {{ gender.display }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div> -->
+                    
+                    
+                </div>
+                <div class="modal-footer">
+                    <button
+                        [disabled]="saving"
+                        type="button"
+                        class="btn btn-light-primary font-weight-bold"
+                        (click)="close()"
+                    >
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary font-weight-bold"
+                        [disabled]="!patientForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ 'Save' | localize }}</span>
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

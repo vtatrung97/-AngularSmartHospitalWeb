@@ -1,0 +1,162 @@
+<div>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header
+            [title]="structureDefinition.title"
+            [description]="'StructureDefinitionDetailHeaderInfo' | localize"
+        >
+            <div role="actions"></div>
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <div class="align-items-center">
+                        <div class="form-group">
+                            <label>{{ 'Publisher' | localize }} *</label>
+                            <input
+                                id="StructureDefinitionPublisherInput"
+                                #structureDefinitionPublisherInput="ngModel"
+                                class="form-control"
+                                type="text"
+                                name="Publisher"
+                                [(ngModel)]="structureDefinition.publisher"
+                                required
+                                readonly="readonly"
+                                disabled="disabled"
+                            />
+                            <validation-messages [formCtrl]="structureDefinitionPublisherInput"></validation-messages>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Date' | localize }} *</label>
+                            <input
+                                id="StructureDefinitionDateInput"
+                                #structureDefinitionDateInput="ngModel"
+                                class="form-control"
+                                type="text"
+                                name="Date"
+                                [(ngModel)]="structureDefinition.date"
+                                required
+                                readonly="readonly"
+                            />
+                            <validation-messages [formCtrl]="structureDefinitionDateInput"></validation-messages>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Version' | localize }} *</label>
+                            <input
+                                id="StructureDefinitionVersionInput"
+                                #structureDefinitionVersionInput="ngModel"
+                                class="form-control"
+                                type="text"
+                                name="Version"
+                                [(ngModel)]="structureDefinition.version"
+                                required
+                                readonly="readonly"
+                            />
+                            <validation-messages [formCtrl]="structureDefinitionVersionInput"></validation-messages>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Name' | localize }} *</label>
+                            <input
+                                id="StructureDefinitionNameInput"
+                                #structureDefinitionNameInput="ngModel"
+                                class="form-control"
+                                type="text"
+                                name="Name"
+                                [(ngModel)]="structureDefinition.name"
+                                required
+                                readonly="readonly"
+                            />
+                            <validation-messages [formCtrl]="structureDefinitionNameInput"></validation-messages>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Title' | localize }} *</label>
+                            <input
+                                id="StructureDefinitionTitleInput"
+                                #structureDefinitionTitleInput="ngModel"
+                                class="form-control"
+                                type="text"
+                                name="Title"
+                                [(ngModel)]="structureDefinition.title"
+                                required
+                                readonly="readonly"
+                            />
+                            <validation-messages [formCtrl]="structureDefinitionTitleInput"></validation-messages>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'PublishStatus' | localize }} *</label>
+                            <select
+                                id="ValueSetPublishStatusInput"
+                                #structureDefinitionPublishStatusInput="ngModel"
+                                name="Status"
+                                class="form-control"
+                                [(ngModel)]="structureDefinition.status"
+                                required
+                            >
+                                <option *ngFor="let status of publishStatusList" [value]="status">
+                                    {{ status | localize }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <span>
+                                {{ 'Element' | localize }}
+                                <button (click)="addElements()" class="btn btn-primary">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </span>
+                            <table
+                                class="table table-striped table-hover table-bordered"
+                                *ngIf="structureDefinition.snapshot"
+                            >
+                                <thead>
+                                    <th>{{ 'Id' | localize }}</th>
+                                    <th>{{ 'Path' | localize }}</th>
+                                    <th>{{ 'Short' | localize }}</th>
+                                    <th>{{ 'Code' | localize }}</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let element of structureDefinition.snapshot.element; let i = index">
+                                        <td>{{ element.id }}</td>
+                                        <td>{{ element.path }}</td>
+                                        <td>{{ element.short }}</td>
+                                        <td>
+                                            <a *ngIf="!element.code" href="javascript:void(0)" (click)="viewCode(i)">{{
+                                                'AddCode' | localize
+                                            }}</a>
+                                            <a *ngIf="element.code" href="javascript:void(0)" (click)="viewCode(i)">{{
+                                                'ViewCode' | localize
+                                            }}</a>
+                                        </td>
+                                        <td>
+                                            <button
+                                                pButton
+                                                (click)="deleteElement(i)"
+                                                *ngIf="i > 0"
+                                                icon="pi pi-trash"
+                                                class="p-button-sm p-button-danger"
+                                                type="button"
+                                            ></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <p-card>
+    <ng-template pTemplate="header">
+        Header content here
+    </ng-template>
+    Body Content
+    <ng-template pTemplate="footer">
+        Footer content here
+    </ng-template>
+</p-card> -->
+        </div>
+        <elementBindingModal #elementBindingModal (modalSave)="onSaveElementBinding()"> </elementBindingModal>
+        <elementCodeModal #elementCodeModal (modalSave)="onSaveElementCode()"> </elementCodeModal>
+    </div>
+</div>

@@ -1,0 +1,219 @@
+<div
+    appBsModal
+    #createOrEditModal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }"
+>
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form #valueSetForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="new-password">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span>{{ 'CreateNewValueSet' | localize }}</span>
+                    </h5>
+                    <button
+                        type="button"
+                        class="close"
+                        (click)="close()"
+                        [attr.aria-label]="l('Close')"
+                        [disabled]="saving"
+                    >
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- <div class="form-group">
+                                <label>{{ 'Publisher' | localize }} *</label>
+                                <input
+                                    id="ValueSetPublisherInput"
+                                    #valueSetPublisherInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Publisher"
+                                    [(ngModel)]="valueSetResource.publisher"
+                                    required
+                                    readonly="readonly"
+                                />
+                                <validation-messages [formCtrl]="valueSetPublisherInput"></validation-messages>
+                            </div> -->
+                            <!-- <div class="form-group">
+                                <label>{{ 'Date' | localize }} *</label>
+                                <input
+                                    id="ValueSetDateInput"
+                                    #valueSetDateInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Date"
+                                    [(ngModel)]="valueSet.date"
+                                    required
+                                    readonly="readonly"
+                                />
+                                <validation-messages [formCtrl]="valueSetDateInput"></validation-messages>
+                            </div> -->
+                            <!-- <div class="form-group">
+                                <label>{{ 'Version' | localize }} *</label>
+                                <input
+                                    id="ValueSetVersionInput"
+                                    #valueSetVersionInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Version"
+                                    [(ngModel)]="valueSet.version"
+                                    required
+                                    readonly="readonly"
+                                />
+                                <validation-messages [formCtrl]="valueSetVersionInput"></validation-messages>
+                            </div> -->
+                            <div class="form-group">
+                                <label>{{ 'Name' | localize }} *</label>
+                                <input
+                                    id="ValueSetNameInput"
+                                    #valueSetNameInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Name"
+                                    [(ngModel)]="valueSetResource.name"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="valueSetNameInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'Title' | localize }} *</label>
+                                <input
+                                    id="ValueSetTitleInput"
+                                    #valueSetTitleInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Title"
+                                    [(ngModel)]="valueSetResource.title"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="valueSetTitleInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'PublishStatus' | localize }} *</label>
+                                <select
+                                    id="ValueSetPublishStatusInput"
+                                    #valueSetPublishStatusInput="ngModel"
+                                    name="Status"
+                                    class="form-control"
+                                    [(ngModel)]="valueSetResource.status"
+                                    required
+                                >
+                                    <option *ngFor="let status of publishStatusList" [value]="status">
+                                        {{ status | localize }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12" *ngIf="valueSetResource.compose">
+                            <div class="form-group">
+                                <!-- <h5 class="card-title">{{item.system}}</h5>
+                                <span>Version:</span>&nbsp;<span>{{item.version}}</span>  -->
+                                <p-toolbar styleClass="mb-4">
+                                    <ng-template pTemplate="left">
+                                        <a href="javascript:void(0)" (click)="onAddInclude()" class="btn-primary">{{ 'New' | localize }}</a>
+                                    </ng-template>
+                            
+                                    <!-- <ng-template pTemplate="right">
+                                        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                                        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+                                    </ng-template> -->
+                                </p-toolbar>
+                            <p-table [value]="valueSetResource.compose.include" dataKey="system" class="table" [scrollable]="true" scrollHeight="300px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <!-- <th style="width: 3rem">
+                                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                        </th> -->
+                                        <th></th>
+                                        <th>{{'System'|localize}}</th>
+                                        <th>{{'Version'|localize}}</th>
+                                        <!-- <th>{{'Display'|localize}}</th> -->
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-include let-expanded="expanded">
+                                    <tr>
+                                        <td>
+                                            <button type="button" pButton pRipple [pRowToggler]="include" 
+                                            class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                        </td>
+                                        <td>
+                                            {{include.system}}
+                                        </td>
+                                        <td>{{include.version}}</td>
+                                        <!-- <td>{{concept.display}}</td> -->
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="rowexpansion" let-include>
+                                    <tr>
+                                        <td style="display: block">
+                                            <div class="p-3">
+                                                <p-table [value]="include.concept" dataKey="code">
+                                                    <ng-template pTemplate="header">
+                                                        <tr>
+                                                            <th pSortableColumn="code">{{'Code'|localize}} <p-sortIcon field="code"></p-sortIcon></th>
+                                                            <th pSortableColumn="code">{{'Display'|localize}} <p-sortIcon field="code"></p-sortIcon></th>
+                                                            <!-- <th pSortableColumn="customer">Customer <p-sortIcon field="customer"></p-sortIcon></th>
+                                                            <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                                                            <th pSortableColumn="amount">Amount <p-sortIcon field="amount"></p-sortIcon></th>
+                                                            <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th> -->
+                                                            <th style="width: 4rem"></th>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="body" let-concept>
+                                                        <tr>
+                                                            <td>{{concept.code}}</td>
+                                                            <td>{{concept.display}}</td>
+                                                            <td><p-button type="button" icon="pi pi-search"></p-button></td>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="emptymessage">
+                                                        <tr>
+                                                            <td colspan="6">There are no order for this product yet.</td>
+                                                        </tr>
+                                                    </ng-template>
+                                                </p-table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        [disabled]="saving"
+                        type="button"
+                        class="btn btn-light-primary font-weight-bold"
+                        (click)="close()"
+                    >
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary font-weight-bold"
+                        [disabled]="!valueSetForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ 'Save' | localize }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<addNewIncludeModal
+            #addNewIncludeModal
+            (modalSave)="loadIncludes()"
+        ></addNewIncludeModal>

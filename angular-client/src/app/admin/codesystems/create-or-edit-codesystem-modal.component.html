@@ -1,0 +1,207 @@
+<div
+    appBsModal
+    #createOrEditModal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #codeSystemForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="new-password">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="codeSystem.id">{{ 'EditCodeSystem' | localize }}: {{ codeSystem.title }}</span>
+                        <span *ngIf="!codeSystem.id">{{ 'CreateNewCodeSystem' | localize }}</span>
+                    </h4>
+                    <button
+                        type="button"
+                        class="close"
+                        (click)="close()"
+                        [attr.aria-label]="l('Close')"
+                        [disabled]="saving"
+                    >
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <tabset class="tab-container tabbable-line">
+                        <tab heading="{{ 'Information' | localize }}">
+                            <div class="form-group">
+                                <label>{{ 'Publisher' | localize }} *</label>
+                                <input
+                                    id="CodeSystemPublisherInput"
+                                    #codeSystemPublisherInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Publisher"
+                                    [(ngModel)]="codeSystem.publisher"
+                                    required
+                                    readonly="readonly"
+                                />
+                                <validation-messages [formCtrl]="codeSystemPublisherInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'Date' | localize }} *</label>
+                                <input
+                                    id="CodeSystemDateInput"
+                                    #codeSystemDateInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Date"
+                                    [(ngModel)]="codeSystem.date"
+                                    required
+                                    readonly="readonly"
+                                />
+                                <validation-messages [formCtrl]="codeSystemDateInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'Version' | localize }} *</label>
+                                <input
+                                    id="CodeSystemVersionInput"
+                                    #codeSystemVersionInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Version"
+                                    [(ngModel)]="codeSystem.version"
+                                    required
+                                    readonly="readonly"
+                                />
+                                <validation-messages [formCtrl]="codeSystemVersionInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'Name' | localize }} *</label>
+                                <input
+                                    id="CodeSystemNameInput"
+                                    #codeSystemNameInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Name"
+                                    [(ngModel)]="codeSystem.name"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="codeSystemNameInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'Title' | localize }} *</label>
+                                <input
+                                    id="CodeSystemTitleInput"
+                                    #codeSystemTitleInput="ngModel"
+                                    class="form-control"
+                                    type="text"
+                                    name="Title"
+                                    [(ngModel)]="codeSystem.title"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="codeSystemTitleInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'Description' | localize }}</label>
+                                <textarea  id="CodeSystemDescriptionInput" #codeSystemDescriptionInput="ngModel"  class="form-control" name="Description"  [(ngModel)]="codeSystem.description"></textarea>
+                                <validation-messages [formCtrl]="codeSystemDescriptionInput"></validation-messages>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ 'PublishStatus' | localize }} *</label>
+                                <select
+                                    id="CodeSystemPublishStatusInput"
+                                    #CodeSystemPublishStatusInput="ngModel"
+                                    name="Status"
+                                    class="form-control"
+                                    [(ngModel)]="codeSystem.status"
+                                    required
+                                >
+                                    <option *ngFor="let status of publishStatusList" [value]="status">
+                                        {{ status | localize }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="checkbox-list">
+                                <label for="CodeSystemCaseSensitiveInput" class="checkbox">
+                                    <input
+                                        id="CodeSystemCaseSensitiveInput"
+                                        type="checkbox"
+                                        name="CaseSensitive"
+                                        [(ngModel)]="codeSystem.caseSensitive"
+                                    />
+                                    <span></span>
+                                    {{ 'CaseSensitive' | localize }}
+                                </label>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label>{{"CaseSensitive" | localize}} *</label>
+                                <input id="CodeSystemCaseSensitiveInput" #codeSystemCaseSensitiveInput="ngModel" class="form-control" type="checkbox" name="CaseSensitive" [(ngModel)]="codeSystem.caseSensitive" required>
+                            </div> -->
+                        </tab>
+                        <tab heading="{{ 'Concept' | localize }}">
+                            <a href="javascript:void(0)" (click)="addNewConcept()" class="btn btn-primary">
+                                <i class="fa fa-plus"></i> {{ 'AddNewConcept' | localize }}
+                            </a>
+                            <table class="table table-striped table-hover table-bordered">
+                                <thead>
+                                    <th>{{ 'Code' | localize }}</th>
+                                    <th>{{ 'Display' | localize }}</th>
+                                    <th>{{ 'Definition' | localize }}</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of codeSystem.concept; let i = index">
+                                        <td>
+                                            <input
+                                                class="form-control"
+                                                type="text"
+                                                name="codeSystem.concept[{{i}}].code"
+                                                [(ngModel)]="item.code"
+                                                required
+                                                placeholder="Code"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                class="form-control"
+                                                type="text"
+                                                name="codeSystem.concept[{{i}}].display"
+                                                [(ngModel)]="item.display"
+                                                required
+                                                placeholder="Display"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                class="form-control"
+                                                type="text"
+                                                name="codeSystem.concept[{{i}}].definition"
+                                                [(ngModel)]="item.definition"
+                                                required
+                                                placeholder="Definition"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </tab>
+                    </tabset>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        [disabled]="saving"
+                        type="button"
+                        class="btn btn-light-primary font-weight-bold"
+                        (click)="close()"
+                    >
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary font-weight-bold"
+                        [disabled]="!codeSystemForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ 'Save' | localize }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

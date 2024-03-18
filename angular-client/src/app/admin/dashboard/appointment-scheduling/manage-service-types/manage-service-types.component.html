@@ -1,0 +1,25 @@
+<h5>Manage Appointment Blocks</h5>
+
+<ng-container>
+    <dx-data-grid
+        id="gridContainer"
+        [dataSource]="dataSource"
+        keyExpr="ID"
+        [showBorders]="true"
+        >
+        <dxi-column
+            dataField="Task_ID"
+            [width]="90">
+        </dxi-column>
+        <dxi-column
+            dataField="Task_Subject"
+            [width]="190"
+            caption="Subject">
+        </dxi-column>
+        <dxi-column
+            dataField="Task_Status"
+            caption="Status">
+        </dxi-column>
+        
+    </dx-data-grid>
+</ng-container>

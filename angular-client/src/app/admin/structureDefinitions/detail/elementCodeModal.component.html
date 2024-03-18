@@ -1,0 +1,82 @@
+<div
+    appBsModal
+    #createOrEditModal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #elementCodeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="new-password">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span>{{ 'ElementCode' | localize }}</span>
+                    </h5>
+                    <button
+                        type="button"
+                        class="close"
+                        (click)="close()"
+                        [attr.aria-label]="l('Close')"
+                        [disabled]="saving"
+                    >
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        <div class="form-group">
+                            <p-dropdown
+                                [options]="valueSets"
+                                #elementCodeInput="ngModel"
+                                name="Code"
+                                [(ngModel)]="selectedValueSet"
+                                (onChange)="onvalueSetChanged($event)"
+                                optionLabel="resource.title"
+                                placeholder="{{ 'SelectAValueSet' | localize }}"
+                                optionValue="resource"
+                                [filter]="true"
+                            ></p-dropdown>
+                        </div>
+                        <div class="form-group" *ngIf="element.code">
+                                <table class="table table-striped table-hover table-bordered">
+                                    <thead>
+                                        <th>{{ 'Code' | localize }}</th>
+                                        <th>{{ 'Display' | localize }}</th>
+                                        <th></th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let concept of element.code; let conceptIndex = index">
+                                            <td>{{ concept.code }}</td>
+                                            <td>{{ concept.display }}</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        [disabled]="saving"
+                        type="button"
+                        class="btn btn-light-primary font-weight-bold"
+                        (click)="close()"
+                    >
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary font-weight-bold"
+                        [disabled]="!isChanged"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ 'SaveChange' | localize }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

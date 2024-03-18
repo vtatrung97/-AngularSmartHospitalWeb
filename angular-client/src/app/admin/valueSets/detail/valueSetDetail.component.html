@@ -1,0 +1,128 @@
+<div [@routerTransition]>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="valueSet.title" [description]="'ValueSetDetailHeaderInfo' | localize">
+            <div role="actions">
+            </div>
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <div class="align-items-center">
+                        <div class="form-group">
+                            <label>{{ 'Publisher' | localize }} *</label>
+                            <input
+                                id="ValueSetPublisherInput"
+                                #valueSetPublisherInput="ngModel"
+                                class="form-control"
+                                type="text"
+                                name="Publisher"
+                                [(ngModel)]="valueSet.publisher"
+                                required
+                                readonly="readonly" disabled="disabled"
+                            />
+                            <validation-messages [formCtrl]="valueSetPublisherInput"></validation-messages>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Date' | localize }} *</label>
+                            <input
+                                id="ValueSetDateInput"
+                                #valueSetDateInput="ngModel"
+                                class="form-control"
+                                type="text"
+                                name="Date"
+                                [(ngModel)]="valueSet.date"
+                                required
+                                readonly="readonly"
+                            />
+                            <validation-messages [formCtrl]="valueSetDateInput"></validation-messages>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Version' | localize }} *</label>
+                            <input
+                                id="ValueSetVersionInput"
+                                #valueSetVersionInput="ngModel"
+                                class="form-control"
+                                type="text"
+                                name="Version"
+                                [(ngModel)]="valueSet.version"
+                                required
+                                readonly="readonly"
+                            />
+                            <validation-messages [formCtrl]="valueSetVersionInput"></validation-messages>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Name' | localize }} *</label>
+                            <input
+                                id="ValueSetNameInput"
+                                #valueSetNameInput="ngModel"
+                                class="form-control"
+                                type="text"
+                                name="Name"
+                                [(ngModel)]="valueSet.name"
+                                required
+                            />
+                            <validation-messages [formCtrl]="valueSetNameInput"></validation-messages>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Title' | localize }} *</label>
+                            <input
+                                id="ValueSetTitleInput"
+                                #valueSetTitleInput="ngModel"
+                                class="form-control"
+                                type="text"
+                                name="Title"
+                                [(ngModel)]="valueSet.title"
+                                required
+                            />
+                            <validation-messages [formCtrl]="valueSetTitleInput"></validation-messages>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'PublishStatus' | localize }} *</label>
+                            <select
+                                id="ValueSetPublishStatusInput"
+                                #valueSetPublishStatusInput="ngModel"
+                                name="Status"
+                                class="form-control"
+                                [(ngModel)]="valueSet.status"
+                                required
+                            >
+                                <option *ngFor="let status of publishStatusList" [value]="status">
+                                    {{ status | localize }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <h3 class="heading">{{ 'Include' | localize }}</h3>
+                            <div *ngFor="let include of valueSet.compose.include; let i=index">
+                                <label>{{include.system}}</label>
+                                <table class="table table-striped table-hover table-bordered">
+                                    <thead>
+                                        <th>{{ 'Code' | localize }}</th>
+                                        <th>{{ 'Display' | localize }}</th>
+                                        <th></th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let concept of include.concept; let conceptIndex=index">
+                                            <td>{{concept.code}}</td>
+                                            <td>{{concept.display}}</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div role="actions">
+                                <button (click)="addInclude()" class="btn btn-primary">
+                                    <i class="fa fa-plus"></i> {{ 'AddMoreInclude' | localize }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <addIncludeModal #addIncludeModal
+        (modalSave)="onSaveAddInclude()">
+
+        </addIncludeModal>
+    </div>
+</div>

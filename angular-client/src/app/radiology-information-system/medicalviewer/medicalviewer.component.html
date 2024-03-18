@@ -1,0 +1,200 @@
+<div [@routerTransition]>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'MedicalViewer' | localize" [description]="'MedicalViewerHeaderInfo' | localize">
+
+        </sub-header>
+
+        <div [class]="containerClass">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card card-custom">
+                        <div class="card-body">
+                            <div class="form">
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="form-group">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 text-right">
+                                        <button name="RefreshButton" class="btn btn-primary" (click)="findStudies()">
+                                            <i class="la la-refresh"></i> {{'Refresh' | localize}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center">
+
+                                <!-- <dx-data-grid
+                                    id="gridContainer"
+                                    [dataSource]="selectedStudy"
+                                    keyExpr="ID"
+                                    [showBorders]="true"
+                                    >
+                                    <dxi-column
+                                        dataField="Task_ID"
+                                        [width]="90">
+                                    </dxi-column>
+                                    <dxi-column
+                                        dataField="Task_Subject"
+                                        [width]="190"
+                                        caption="Subject">
+                                    </dxi-column>
+                                    <dxi-column
+                                        dataField="Task_Status"
+                                        caption="Status">
+                                    </dxi-column>
+                                    <dxi-column
+                                        dataField="Task_Assigned_Employee_ID"
+                                        caption="Assigned Employee ID">
+                                    </dxi-column>
+                                    
+                                </dx-data-grid> -->
+
+
+                                <!--<Primeng-TurboTable-Start>-->
+                                     <!--<th style="width: 130px"
+                                                    [hidden]="!(['Pages.Administration.Roles.Edit', 'Pages.Administration.Roles.Delete'] | permissionAny)">
+                                                    {{'Actions' | localize}}
+                                                </th>-->
+                                <div class="col primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+                                    <p-table #dataTable (onLazyLoad)="findStudies()" [value]="primengTableHelper.records"
+                                             rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false"
+                                             selectionMode="single"
+                                             [(selection)]="selectedStudy"
+                                             (onRowSelect)="onRowSelect($event)"
+                                             [lazy]="true" [responsive]="primengTableHelper.isResponsive">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                               
+                                                <th>{{'PatientID' | localize}}</th>
+                                                <th>{{'Name' | localize}}</th>
+                                                <th>{{'Accession#' | localize}}</th>
+                                                <th>{{'StudyDate' | localize}}</th>
+                                                <th>{{'ReferringPhysiciansName' | localize}}</th>
+                                                <th>{{'Description' | localize}}</th>
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="body" let-record="$implicit">
+                                            <tr [pSelectableRow]="record">
+                                                <td>
+                                                    <span class="p-column-title">{{'PatientID' | localize}}</span>
+                                                    {{record.Patient.ID}}
+                                                </td>
+                                                <td>
+                                                    <span class="p-column-title">{{'Name' | localize}}</span>
+                                                    {{record.Patient.Name}}
+                                                </td>
+                                                <td>
+                                                    <span class="p-column-title">{{'Accession#' | localize}}</span>
+                                                    {{record.AccessionNumber}}
+                                                </td>
+                                                <td>
+                                                    <span class="p-column-title">{{'StudyDate' | localize}}</span>
+                                                    {{record.Date}}
+                                                </td>
+                                                <td>
+                                                    <span class="p-column-title">{{'ReferringPhysiciansName' | localize}}</span>
+                                                    {{record.ReferringPhysiciansName}}
+                                                </td>
+                                                <td>
+                                                    <span class="p-column-title">{{'Description' | localize}}</span>
+                                                    {{record.Description}}
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+
+                                    </p-table>
+                                </div>
+                                <!--<Primeng-TurboTable-End>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card card-custom gutter-b">
+                        <div class="card-header align-items-center border-0">
+                            <h3 class="card-title align-items-start flex-column" *ngIf="selectedStudy">
+                                <span class="font-weight-bolder text-dark">  <span>{{selectedStudy.Patient.Name}}</span></span>
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <tabset class="tab-container">
+                                <tab heading="{{'Information' | localize}}" [active]="true">
+                                    <!--<organization-unit-members #ouMembers (membersAdded)="ouTree.membersAdded($event)"
+            (memberRemoved)="ouTree.memberRemoved($event)"></organization-unit-members>-->
+                                </tab>
+                                <tab heading="{{'Series' | localize}}">
+                                    <!--<organization-unit-roles #ouRoles (rolesAdded)="ouTree.rolesAdded($event)"
+            (roleRemoved)="ouTree.roleRemoved($event)"></organization-unit-roles>-->
+                                    <p-orderList [value]="series">
+                                        <ng-template let-serie pTemplate="item">
+                                            <div class="series-item">
+                                                <div class="image-container">
+                                                    <img src="http://192.168.1.120/MedicalViewerServiceAsp22/api/retrieve/GetSeriesThumbnail?auth={{enCodeUri(authCookie.value)}}&study={{serie.StudyInstanceUID}}&series={{serie.InstanceUID}}&cx=180&cy=180" class="series-image" width="initial">
+                                                    <!--<div style="font-size:14px;float:right;margin:15px 5px 0 0">{{serie.Modality}} - {{serie.NumberOfRelatedInstances}} - {{serie.Description}}</div>-->
+                                                </div>
+                                                <div class="series-list-detail">
+                                                    <h5 class="mb-2">{{serie.Modality}}</h5>
+                                                    <i class="pi pi-tag series-category-icon"></i>
+                                                    <span class="series-category">{{serie.Date}}</span>
+                                                    <span class="series-category">{{serie.Description}}</span>
+                                                </div>
+                                                <div class="series-list-action">
+                                                    <h6 class="mb-2">{{serie.NumberOfRelatedInstances}}</h6>
+                                                    <!--<button pButton type="button" icon="pi pi-check" iconPos="left"></button>-->
+                                                    <p-button label="{{'ViewImage' | localize}}" class="p-button-outlined p-button-secondary"
+                                                              (click)="viewImage(serie)" icon="pi pi-search" iconPos="left"></p-button>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </p-orderList>
+                                </tab>
+                                <tab heading="{{'SelectedImages' | localize}}" *ngIf="images">
+                                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-2">
+                                        <div class="col" *ngFor="let image of images; index as i; first as isFirst">
+                                            <div class="card shadow-sm">
+                                                <!--<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+                                                <img class="bd-placeholder-img card-img-top" width="100%" height="225" [src]="image.previewImageSrc" />
+                                                <div class="card-body">
+                                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-sm btn-outline-secondary">{{'View' | localize}}</button>
+                                                            <button type="button" class="btn btn-sm btn-outline-secondary">{{'Remove' | localize}}</button>
+                                                        </div>
+                                                        <!--<small class="text-muted">9 mins</small>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </tab>
+                            </tabset>
+
+                            <p-editor [(ngModel)]="text2" [style]="{'height':'320px'}">
+                                <ng-template pTemplate="header">
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-bold" aria-label="Bold"></button>
+                                        <button type="button" class="ql-italic" aria-label="Italic"></button>
+                                        <button type="button" class="ql-underline" aria-label="Underline"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <select class="ql-font"></select>
+                                        <select class="ql-size"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-list" aria-label="List" value='ordered'></button>
+                                        <button type="button" class="ql-list" aria-label="Bullet" value='bullet'></button>
+                                    </span>
+                                </ng-template>
+                            </p-editor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

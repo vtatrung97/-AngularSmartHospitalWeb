@@ -1,0 +1,35 @@
+<div>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'Orders' | localize" [description]="'OrderHeaderInfo' | localize">
+            <div role="actions">
+                <button (click)="createOrder()" class="btn btn-primary">
+                    <i class="fa fa-plus"></i> {{ 'CreateNewOrder' | localize }}
+                </button>
+            </div>
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+                            <dx-data-grid
+                                id="gridContainer"
+                                [dataSource]="primengTableHelper.records"
+                                [showBorders]="true">
+                                <dxi-column type="buttons" [width]="110">
+                                    <dxi-button name="delete"></dxi-button>
+                                    <dxi-button name="edit"
+                                    ></dxi-button>
+                                  </dxi-column>
+                                <dxi-column dataField="patient"></dxi-column>
+                                <dxi-column dataField="text"></dxi-column>
+                                <dxi-column dataField="status"></dxi-column>
+                                <dxi-column dataField="priority"></dxi-column>
+                                <dxi-column dataField="performer"></dxi-column>
+                            </dx-data-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

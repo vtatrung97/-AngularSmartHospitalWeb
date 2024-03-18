@@ -1,0 +1,72 @@
+<div
+    appBsModal
+    #createOrEditModal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }"
+>
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content dxFormPopup">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <span>{{ 'ImportFromCodeSystem' | localize }}</span>
+                </h5>
+                <button
+                    type="button"
+                    class="close"
+                    (click)="close()"
+                    [attr.aria-label]="l('Close')"
+                    [disabled]="saving"
+                >
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form">
+                    <div class="dx-fieldset">
+                        <div class="dx-field">
+                            <div class="dx-field-label">{{ 'System' | localize }}</div>
+                            <dx-select-box
+                                valueExpr="path"
+                                displayExpr="title"
+                                [searchEnabled]="true"
+                                [items]="codeSystems"
+                                (onValueChanged)="onSelectSystemChanged($event)"
+                            >
+                            </dx-select-box>
+                        </div>
+                        <div class="dx-field" *ngIf="currentCodeSystem">
+                            <dx-data-grid
+                                *ngIf="currentCodeSystem.concept"
+                                id="gridContainer"
+                                caption="Binding"
+                                [dataSource]="currentCodeSystem.concept"
+                                [columns]="['code', 'display', 'definition']"
+                                [showBorders]="true"
+                            >
+                               
+                            </dx-data-grid>
+                        </div>
+                        <div class="dx-field">
+                            <dx-button
+                                style="float: right"
+                                [disabled]="currentCodeSystem.concept == null"
+                                itemType="button"
+                                stylingMode="contained"
+                                text="{{ 'AddCodeSystem' | localize }}"
+                                type="success"
+                                horizontalAlignment="right"
+                                (click)="save($event)"
+                            >
+                            </dx-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

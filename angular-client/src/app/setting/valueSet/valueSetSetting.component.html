@@ -1,0 +1,49 @@
+<div *ngIf="!valueSet">
+    <a href="javascript:void(0)" (click)="addValueSet()">{{ 'AddBinding' | localize }}</a>
+</div>
+<div *ngIf="valueSet">
+    <div class="dx-field flex-row">
+        <div class="dx-field-label">{{ 'Title' | localize }}:</div>
+        <dx-text-box class="dx-field-value" [(ngModel)]="valueSet.title"> </dx-text-box>
+    </div>
+    <div class="dx-field flex-row">
+        <div class="dx-field-label">{{ 'Name' | localize }}:</div>
+        <dx-text-box class="dx-field-value" [(ngModel)]="valueSet.name"> </dx-text-box>
+    </div>
+    <div class="dx-field flex-row">
+        <div class="dx-field-label">{{ 'Status' | localize }}:</div>
+        <!-- <dx-text-box class="dx-field-value" [(ngModel)]="valueSet.status"> </dx-text-box> -->
+        <dx-select-box class="dx-field-value" [(ngModel)]="valueSet.status" [items]="publishStatusList"></dx-select-box>
+    </div>
+    <div class="dx-fieldset-header">{{ 'IncludeConcepts' | localize }}:</div>
+    <dx-data-grid
+        *ngIf="valueSet.compose"
+        id="gridContainer"
+        caption="Binding"
+        [dataSource]="valueSet.compose.include"
+        [columns]="['system']"
+        [showBorders]="true"
+        (onRowRemoving)="onremovingIncludeRow($event)"
+    >
+        <dxo-toolbar>
+            <dxi-item location="after">
+                <div *dxTemplate>
+                    <dx-button icon="refresh" (click)="refreshValueSet()"> </dx-button>
+                </div>
+            </dxi-item>
+            <dxi-item location="before">
+                <div *dxTemplate class="informer">
+                    <dx-button icon="add" (click)="addInclude()"> </dx-button>
+                </div>
+            </dxi-item>
+        </dxo-toolbar>
+        <dxo-editing mode="row" [allowUpdating]="false" [useIcons]="true" [allowDeleting]="true" [allowAdding]="false">
+        </dxo-editing>
+        <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+        <div *dxTemplate="let include of 'detail'">
+            <div class="master-detail-caption">{{ 'Concepts' | localize }}:</div>
+            <detail-grid [concepts]="include.data.concept"></detail-grid>
+        </div>
+    </dx-data-grid>
+    <addIncludeSettingModal #addIncludeSettingModal (modalSave)="saveInclude()"></addIncludeSettingModal>
+</div>

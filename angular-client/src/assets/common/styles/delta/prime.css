@@ -1,0 +1,339 @@
+/*====================================================================================*/
+/*====================================================================================*/
+/*====================================================================================*/
+/*==========================    LOGIN      ====================================*/
+
+#kt_login {
+    background-image: linear-gradient(45deg, #525a6f 0, #7cb2d3 42%, #adcde1 100%);
+}
+
+.dt-login {
+  border-radius: 25px !important;
+  position: relative !important;
+  top: 0;
+  box-shadow: inset 0 1px 0 #ffffff80, 0 1px 2px #00000080 !important;
+  transition: all .5s ease !important;
+}
+
+/*==============================    LOGIN    ======================================*/
+/*====================================================================================*/
+/*====================================================================================*/
+/*====================================================================================*/
+
+.aside-menu .menu-nav > .menu-item.menu-item-here::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 3px solid #3699ff;
+    height: 100%;
+    z-index: 1;
+}
+
+.aside-menu .menu-nav > .menu-item.menu-item-here .menu-link .menu-icon i {
+    color: #3699ff;
+}
+
+.aside-menu .menu-nav > .menu-item.menu-item-here > .menu-heading .menu-text, .aside-menu .menu-nav > .menu-item.menu-item-here > .menu-link .menu-text {
+    font-weight: 600;
+}
+
+.dt-login:active {
+    top: 3px;
+}
+
+.dt-form-login .form-group input {
+  background: #aecde1;
+  border-radius: 50px !important;
+  color: black;
+  font-weight: 600;
+  border-right: 0;
+  border-bottom: 0;
+  font-size: 14px !important;
+  padding: 1rem 1.75rem !important;
+  position: relative;
+  top: 0;
+  width: 75%;
+  background-color: #cfe9f9;
+  border: unset;
+  box-shadow: inset 0 1px 0 #ffffff80, 0 1px 2px #00000080;
+  transition: all .5s ease !important;
+}
+
+
+.dt-form-login .form-group input:focus {
+  color: #3F4254;
+  background-color: #c5e0f1;
+  border-color: #ffffff;
+  outline: 0;
+  top: 2px;
+  box-shadow: 1px 1px 2px 1px #5e728b inset, -1px -1px 1px white !important;
+}
+
+.dt-form-login .form-group input::-webkit-input-placeholder {
+    color: black;
+    font-weight: 400;
+}
+
+.dt-form-login .form-group input::-moz-placeholder {
+    color: #B5B5C3;
+    opacity: 1; 
+}
+
+.dt-form-login .form-group input:-ms-input-placeholder {
+    color: #B5B5C3;
+    opacity: 1; 
+}
+
+.dt-form-login .form-group input::-ms-input-placeholder {
+    color: #B5B5C3;
+    opacity: 1; 
+}
+
+.login-form .form-group label {
+    white-space: nowrap;
+}
+
+.dt-shadow {
+    text-shadow: 0px 1px #556076;
+}
+
+.dt-shadow span {
+    background-color: #cfe9f9 !important;
+    border: unset !important;
+    box-shadow: inset 0 1px 0 #ffffff80, 0 1px 2px #00000080;
+}
+
+/*====================================================================================*/
+/*====================================================================================*/
+/*====================================================================================*/
+/*=========================   NAV - RIGHT   ====================================*/
+
+.offcanvas-on {
+    visibility: visible;
+}
+
+/*==========================   NAV - RIGHT   MENU ADMIN ========================================*/
+/*====================================================================================*/
+.modal-body {
+    padding: 0px 12.5px !important;
+}
+
+.modal-body .col-md-4.flex-column.h-100 {
+    /* background-color: #f6f5f8; */
+    box-shadow: 1px 0px 0px #e8e7eb;
+    border-right: 1px solid #d8d6dd;
+    z-index: 1;
+}
+
+.modal-body .col-md-8.flex-column.h-100 {
+    background-color: #f0f2f6;
+}
+
+.form-column {
+    padding: 12px 0;
+}
+
+.form-column .form-group {
+    margin-bottom: .75rem;
+}
+
+.form-column .form-check {
+    padding-left: 1.5rem;
+}
+
+.modal-body-lt {
+    display: flex;
+}
+
+.modal-body-lt .row {
+    width: calc(100% + 25px);
+}
+
+.form-group .form-floating {
+    border-radius: 6px;
+    box-shadow: 0px 1px 3px #e9e8ef;
+}
+
+.form-group .p-inputgroup .p-float-label,
+.form-group .p-float-label {
+    width: 100%;
+}
+
+.form-group .p-inputgroup p-inputmask,
+.form-group p-inputmask {
+    width: 100%;
+}
+
+.form-group .p-inputgroup p-inputnumber,
+.form-group p-inputnumber {
+    width: 100%;
+}
+
+.form-group .p-inputgroup p-dropdown,
+.form-group p-dropdown  {
+    width: 100%;
+}
+
+.form-group .p-inputgroup p-dropdown .p-inputtext,
+.form-group p-dropdown .p-inputtext {
+    border: unset;
+}
+
+.form-group .p-inputgroup .p-dropdown,
+.form-group .p-dropdown {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-group_on .form-group .p-inputgroup .p-component,
+.form-group_on .form-group .p-component  {
+    flex: 1;
+    width: 100%;
+}
+
+.form-group .p-inputgroup .p-inputtext,
+.form-group .p-inputtext {
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+}
+
+.form-group .p-inputgroup .p-inputgroup-addon {
+    border: 1px solid #ced4da;
+    border-right: unset;
+    border-radius: 6px;
+    border-top-right-radius: 0%;
+    border-bottom-right-radius: 0%;
+}
+
+.form-group .p-inputgroup .p-inputgroup-addon i {
+    color: #6c757d;
+}
+
+.form-group .p-inputgroup .p-inputtext,
+.form-group .p-inputtext {
+    border-radius: 6px !important;
+    border-top-left-radius: 0% !important;
+    border-bottom-left-radius: 0% !important;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+.form-group .p-inputtext {
+    border-radius: 6px !important;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+.form-group .p-inputgroup .p-inputgroup-addon,
+.form-group .p-inputgroup-addon {
+    width: 45px;
+    padding: 0.5rem 1.265rem;
+}
+
+.form-group .p-inputgroup .p-float-label .p-inputtext,
+.form-group .p-float-label .p-inputtext {
+    padding-top: 1.625rem;
+}
+
+.form-group .p-inputgroup .p-float-label p-dropdown .p-inputtext,
+.form-group .p-float-label p-dropdown .p-inputtext {
+    padding-top: 1.625rem;
+}
+
+.form-group .p-inputgroup .p-float-label label,
+.form-group .p-float-label label {
+    left: 0.75rem;
+}
+
+.form-group .p-float-label input:focus ~ label, 
+.form-group .p-float-label input.p-filled ~ label, 
+.form-group .p-float-label textarea:focus ~ label, 
+.form-group .p-float-label textarea.p-filled ~ label, 
+.form-group .p-float-label .p-inputwrapper-focus ~ label, 
+.form-group .p-float-label .p-inputwrapper-filled ~ label {
+    top: 1.25rem;
+    font-size: .85rem; 
+    opacity: .85;
+}
+
+.form-group .p-inputgroup .p-float-label .p-inputwrapper-filled label,
+.form-group .p-float-label .p-inputwrapper-filled label {
+    transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+    top: 1.625rem;
+    left: 0;
+    padding-left: 0.25rem;
+}
+
+
+/*************************************** ================== ACTION AND LIST Overview*/
+/* 
+.content {
+    padding: 0 !important;
+}
+
+.content .container-fluid {
+    padding: 0;
+    overflow: hidden;
+}
+
+.content .container-fluid .row .col-md-12 {
+
+}
+
+.content .container-fluid tab gridster {
+    padding: 0 !important;
+}
+
+.content .container-fluid tab gridster gridster-item {
+    padding: 0 10px 0 25px;
+}  
+*/
+
+.card .card-select {
+    display: flex;
+    padding: 1rem;
+    align-items: center;
+    cursor: pointer;
+    color: unset;
+}
+
+.card .card-select:hover {
+    color: #3699FF;
+}
+
+.card .card-select .card-select_icon {
+    position: relative;
+    top: 0px;
+    -webkit-box-flex: 1;
+    min-height: 1px;
+    background: #EEF0F8;
+    border-radius: 0.35rem;
+    margin-right: 0.5rem;
+    height: 52px;
+    width: 55px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #e4e6ee;
+    box-shadow: 1px 1px 2px #e4e6ee inset;
+}
+
+.card .card-select:hover .card-select_icon {
+    color: #3699FF;
+    top: -1px;
+    box-shadow: 0px 1px 1px #616266;
+}
+
+.card .card-select .card-select_icon i {
+    font-size: 22px;
+    color: #8b8b8b;
+    text-shadow: 0px 1px #363636;
+}
+
+.card .card-select:hover .card-select_icon i {
+    color: #3699FF;
+}

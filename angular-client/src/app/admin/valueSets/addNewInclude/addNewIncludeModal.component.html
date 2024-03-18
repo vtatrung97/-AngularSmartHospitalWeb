@@ -1,0 +1,113 @@
+<div
+    appBsModal
+    #addNewIncludeModal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="addNewIncludeModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static', keyboard: !saving }"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <span>{{ 'AddNewInclude' | localize }}</span>
+                </h5>
+                <button
+                    type="button"
+                    class="close"
+                    (click)="close()"
+                    [attr.aria-label]="l('Close')"
+                    [disabled]="saving"
+                >
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <p-multiSelect [options]="codeSystems" (onChange)="onCodeSystemChange($event)" [(ngModel)]="selectedCodeSystems" optionLabel="name"></p-multiSelect>
+                    </div>
+                    <div class="col-12">
+                        <p-table [value]="includes" dataKey="system" class="table" [scrollable]="true" scrollHeight="300px">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <!-- <th style="width: 3rem">
+                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                    </th> -->
+                                    <th>{{'System'|localize}}</th>
+                                    <th>{{'Version'|localize}}</th>
+                                    <!-- <th>{{'Display'|localize}}</th> -->
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-include let-expanded="expanded">
+                                <tr>
+                                    <td>
+                                        <button type="button" pButton pRipple [pRowToggler]="include" 
+                                        class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                        {{include.system}}
+                                    </td>
+                                    <td>{{include.version}}</td>
+                                    <!-- <td>{{concept.display}}</td> -->
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="rowexpansion" let-include>
+                                <tr>
+                                    <td style="display: block">
+                                        <div class="p-3">
+                                            <p-table [value]="include.concept" dataKey="code">
+                                                <ng-template pTemplate="header">
+                                                    <tr>
+                                                        <th pSortableColumn="code">{{'Code'|localize}} <p-sortIcon field="code"></p-sortIcon></th>
+                                                        <th pSortableColumn="code">{{'Display'|localize}} <p-sortIcon field="code"></p-sortIcon></th>
+                                                        <!-- <th pSortableColumn="customer">Customer <p-sortIcon field="customer"></p-sortIcon></th>
+                                                        <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                                                        <th pSortableColumn="amount">Amount <p-sortIcon field="amount"></p-sortIcon></th>
+                                                        <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th> -->
+                                                        <th style="width: 4rem"></th>
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template pTemplate="body" let-concept>
+                                                    <tr>
+                                                        <td>{{concept.code}}</td>
+                                                        <td>{{concept.display}}</td>
+                                                        <td><p-button type="button" icon="pi pi-search"></p-button></td>
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template pTemplate="emptymessage">
+                                                    <tr>
+                                                        <td colspan="6">There are no order for this product yet.</td>
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    [disabled]="saving"
+                    type="button"
+                    class="btn btn-light-primary font-weight-bold"
+                    (click)="close()"
+                >
+                    {{ 'Cancel' | localize }}
+                </button>
+                <button
+                        class="btn btn-primary font-weight-bold"
+                        [buttonBusy]="saving"
+                    (click)="saveIncludes()"
+                    [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ 'Save' | localize }}</span>
+                    </button>
+            </div>
+        </div>
+    </div>
+</div>

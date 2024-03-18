@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col-md-3" *ngFor="let router of routes">
+        <div class="card">
+            <a class="card-select" routerLink="../{{router.link}}">
+                <span class="card-select_icon">
+                    <i class="{{router.icon}}"></i>
+                </span>
+                {{router.name}}
+            </a>
+        </div>
+    </div>
+</div>

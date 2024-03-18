@@ -1,0 +1,191 @@
+html, body {
+    width: max-content;
+    min-height: 100% !important;
+    height: 100% !important;
+    width: 100% !important;
+}
+
+#mainBox, #mainBox_vertical, body {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 auto;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+}
+
+body {
+	display: flex;
+	flex: 1;
+	margin: 0 !important;
+}
+
+body, html {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-direction: normal;
+}
+
+details {
+	background: white;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+details:last-child {
+    margin-bottom: 0;
+}
+
+details summary {
+	color: #007bff;
+    outline: 0;
+}
+
+details
+{
+    overflow: hidden;
+    max-height: 2.5rem;
+    transition: all 1s ease-out;
+}
+
+details:not([open])
+{
+    height: 2.5em;
+}
+
+details[open]
+{
+    max-height: 100%;
+    transition: all 1s ease-out;
+}
+
+details .row {
+	margin-top: 0.5rem;
+}
+
+.add-patient {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+}
+
+.add-patient-layout {
+   flex: 1;
+   overflow: auto;
+}
+
+.add-patient h2 {
+	margin-top: 1rem;
+}
+.nav-tabs .nav-link {
+	border-bottom: 1px solid var(--primary);
+    border-left: 0;
+    border-right: 0;
+}
+
+.add-patient-left {
+    
+}
+
+.add-patient-left details {
+    background: white;
+}
+
+.add-patient-right {
+    background: #e8e9ea;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.overflow-y-auto {
+    overflow-y: auto;
+}
+
+.overflow-x-hidden {
+    overflow-x: hidden;
+}
+
+.card-img {
+    width: 8rem;
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.img-patient {
+    max-width: 100%;
+    object-fit: contain;
+    max-height: 100%;
+    border: 1px solid #007bff;
+}
+
+.file-input {
+    position: absolute;
+    width: 98px;
+    left: 12px;
+    top: 0;
+}
+
+.card-img-patient .file-input {
+    visibility: hidden;
+    transition: all .5s ease-out;
+}
+
+.card-img-patient:hover .file-input {
+    visibility: visible;
+}
+
+@media (min-width: 1366.5px) {
+  .col-xxl-3 {
+    flex: 0 0 auto;
+    width: 25%;
+  }
+
+  .col-xxl-9 {
+    flex: 0 0 auto;
+    width: 75%;
+  }
+
+  .col-xxl-12 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .add-patient-left {
+    display: flex;
+    height: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+.brand .brand-logo img {
+    padding: 2px;
+    padding-left: 0;
+    padding-right: 15px;
+}
+
+.login-aside {
+    background-image: url(/assets/common/images/login_bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.login-aside .d-flex.flex-column-auto.flex-column.pt-lg-40.pt-15 {
+    display: none !important;
+}
+
+@media (min-width: 992px) {
+    .login.login-1 .login-aside {
+        width: 100% !important;
+        max-width: 50% !important;
+    }
+}

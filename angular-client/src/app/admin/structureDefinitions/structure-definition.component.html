@@ -1,0 +1,113 @@
+<div [@routerTransition]>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'StructureDefinition' | localize" [description]="'StructureDefinitionHeaderInfo' | localize">
+            <div role="actions">
+                <button (click)="createStructureDefinition()" class="btn btn-primary">
+                    <i class="fa fa-plus"></i> {{ 'CreateNewStructureDefinition' | localize }}
+                </button>
+            </div>
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="row">
+                <div class="col-12">
+                    <div class="col primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+                        <p-table
+                            #dataTable
+                            (onLazyLoad)="loadStructureDefinitions()"
+                            [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                            [paginator]="false"
+                            selectionMode="single"
+                            [(selection)]="selectedStructureDefinition"
+                            (onRowSelect)="onRowSelect($event)"
+                            [lazy]="true"
+                            [responsive]="primengTableHelper.isResponsive"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px">{{ 'Actions' | localize }}</th>
+                                    <th>{{ 'Title' | localize }}</th>
+                                    <th>{{ 'Name' | localize }}</th>
+                                    <th>{{ 'Status' | localize }}</th>
+                                    <th>{{ 'CreationTime' | localize }}</th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-record="$implicit">
+                                <tr [pSelectableRow]="record">
+                                    <td style="width: 130px">
+                                        <div class="btn-group" dropdown placement="bottom left">
+                                            <button
+                                                id="dropdownButton"
+                                                type="button"
+                                                class="btn btn-primary btn-sm dropdown-toggle"
+                                                dropdownToggle
+                                                aria-controls="dropdownMenu"
+                                            >
+                                                <i class="fa fa-cog"></i><span class="caret"></span>
+                                                {{ 'Actions' | localize }}
+                                            </button>
+                                            <ul
+                                                id="dropdownMenu"
+                                                class="dropdown-menu"
+                                                role="menu"
+                                                *dropdownMenu
+                                                aria-labelledby="dropdownButton">
+                                                <li role="menuitem">
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item" (click)="editStructureDefinition(record)">{{ 'Edit' | localize }}</a>
+                                                </li>
+                                                <li role="menuitem">
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item" (click)="deleteStructureDefinition(record)">{{ 'Delete' | localize }}</a>
+                                                </li>
+                                                <li role="menuitem">
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item" (click)="downloadStructureDefinition(record)">{{ 'Download' | localize }}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <!-- <a
+                                        [routerLink]="['detail']"
+                                        [queryParams]="{ id: record.id }"
+                                        queryParamsHandling="merge"
+                                        (click)="editStructureDefinition(record)"
+                                    > -->
+                                    <a href="javascript:;" (click)="editStructureDefinition(record)">
+                                        {{ record.title }}
+                                    </a>
+                                    </td>
+                                    <td>
+                                        <span class="p-column-title">{{ 'Name' | localize }}</span>
+                                        {{ record.name }}
+                                    </td>
+                                    <td>
+                                        <span class="p-column-title">{{ 'Status' | localize }}</span>
+                                        {{ record.status }}
+                                    </td>
+                                    <td>
+                                        <span class="p-column-title">{{ 'CreationTime' | localize }}</span>
+                                        {{ record.creationTime }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <createStructureDefinitionModal
+            #createStructureDefinitionModal
+            (modalSave)="loadStructureDefinitions()"
+        ></createStructureDefinitionModal>
+        <editStructureDefinitionModal
+            #editStructureDefinitionModal
+            (modalSave)="loadStructureDefinitions()"
+        ></editStructureDefinitionModal>
+    </div>
+</div>

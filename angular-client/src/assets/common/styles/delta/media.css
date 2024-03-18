@@ -1,0 +1,15 @@
+@media (min-width: 992px) {
+    .login.login-1 .login-aside {
+        width: 100% !important;
+        max-width: 50% !important;
+    }
+
+    .login.login-1 .login-content .login-form {
+        width: 100%;
+        max-width: 380px !important;
+    }
+
+    .content {
+        padding: 0;
+    }
+}
